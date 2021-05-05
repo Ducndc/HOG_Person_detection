@@ -1,0 +1,183 @@
+\documentclass[pdf]{beamer}
+%\mode<presentation>{}
+
+\usepackage{amssymb,amsmath,amsthm,enumerate}
+\usepackage[utf8]{vietnam}
+\usepackage{array}
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{amsfonts,amscd}
+%\usepackage{gensymb}
+\usepackage[]{units}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{tcolorbox}
+
+%new commands
+\newcommand{\der}[2]{\frac{d#1}{d#2}}
+\newcommand{\nder}[3]{\frac{d^#1 #2}{d #3 ^ #1}}
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\npder}[3]{\frac{\partial ^#1 #2}{\partial #3^#1}}
+\newcommand{\sentencelist}{def}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\lined}{\overbar}
+\newcommand{\perm}[2]{{}^{#1}\!P_{#2}}
+\newcommand{\comb}[2]{{}^{#1}C_{#2}}
+\newcommand{\intall}{\int_{-\infty}^{\infty}}
+\newcommand{\Var}[1]{\text{Var}\left(#1\right)}
+\newcommand{\E}[1]{\text{E}\left(#1\right)}
+\newcommand{\define}{\equiv}
+\newcommand{\diff}[1]{\mathrm{d}#1}
+\newcommand{\empy}[1]{{\color{darkorange}\emph{#1}}}
+\newcommand{\empr}[1]{{\color{cardinalred}\emph{#1}}}
+
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+
+\newcommand{\examplebox}[2]{
+\begin{tcolorbox}[colframe=darkcardinal,colback=boxgray,title=#1]
+#2
+\end{tcolorbox}}
+
+\newcommand{\eld}[1]{\frac{d}{dt}(\frac{\partial L}{\partial \dot #1}) - \frac{\partial L}{\partial #1}=0}
+\newcommand{\euler}[1]{\frac{\partial L}{\partial #1}-\frac{d}{dt}(\frac{\partial L}{\partial \dot #1})}
+\newcommand{\eulerg}[1]{\frac{\partial g}{\partial #1}-\frac{d}{dt}(\frac{\partial g}{\partial \dot #1})}
+\newcommand{\divg}[1]{\nabla\cdot #1}
+\newcommand{\prob}[1]{P(#1\vert I)}
+
+
+
+\usetheme{Stanford} 
+\input{./style_files_stanford/my_beamer_defs.sty}
+\logo{\includegraphics[height=0.4in]{./style_files_stanford/logo_bk.png}}
+
+
+
+\title[Bài tập lớn môn học]{Bài tập lớn trí tuệ nhân tạo và ứng dụng}
+\subtitle{Phát hiện người dùng phương pháp HOG}
+
+
+\begin{document}
+
+
+
+\author[Nhóm 2, HUST]{
+	\begin{tabular}{c} 
+	\Large
+	Nhóm 2\\
+\end{tabular}
+\vspace{-4ex}}
+
+\institute{
+	
+	Nguyễn Đặng Chung Đức\\
+	Nguyễn Quang Huy\\
+	Trần Phương Thu\\
+	Nguyễn Tuấn Minh\\
+	Mai Xuân Ninh\\
+	Nguyễn Thị Chiến}
+
+\date{\today}
+
+
+\begin{frame}\maketitle\end{frame}
+
+
+
+
+\begin{frame}{Nội dung chính}
+Nội dung chính ở slide này:
+	\begin{itemize}
+		\item Giới thiệu đề tài
+		\item Phân tích đề tài
+		\item Kết luận
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Giới thiệu đề tài}
+	\begin{itemize}
+		\item Tìm kiếm vị trí của đối tượng có trong ảnh và phân loại đối tượng đó thuộc lớp nào.
+		\item Đầu ra của phát hiện đối tượng là vị trí bounding box trên ảnh và nhãn lớp đối tượng của bounding box đó.
+		\item Bài toán phát hiện người trong ảnh là bài toán phát hiện đối tượng hai lớp: lớp người và lớp background.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Phân tích đề tài}
+	\begin{itemize}
+		\item Huấn luyện mô hình phân loại người dùng đặc trưng HOG
+		\item Phát hiện người dùng phương pháp HOG
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Huấn luyện mô hình phân loại người dùng}
+	\begin{itemize}
+		\item Tập dữ liệu INRIA Person Dataset
+		\begin{itemize}
+			\item Tập positive (nhãn dương - người)
+			\item Tập negative (nhãn âm - background)
+		\end{itemize}
+		\item Lần lượt duyệt các ảnh người trong tập positive theo file groundtruth
+		\item Đọc ảnh positive
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Huấn luyện mô hình phân loại người dùng}
+	\begin{itemize}
+		\item Trích đặc trưng mỗi ảnh ta tiến hành lưu trữ lại vector 3780 chiều
+		\item Sau khi "xử" hết tập positive ta sẽ thu thập được một ma trận có kích thước 2416 x 3780, mỗi dòng trong ma trận này là vector đặc trưng của mỗi mẫu dương. 2416 chính là số mẫu dương trong danh sách huấn luyện.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Huấn luyện mô hình phân loại người dùng}
+	\begin{itemize}
+		\item Đọc ảnh negative, crop trên ảnh này một cách ngẫu nhiên để làm mẫu âm (tức ảnh không có người). Mỗi ảnh negative ta crop ngẫu nhiên 10 mẫu âm.
+		\item Trích đặc trưng trên các mẫu ảnh âm này và lưu trữ
+		\item Thu được ma trận có kích thước 12180 x 3780
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Huấn luyện mô hình phân loại người dùng}
+	\begin{itemize}
+		\item Tiến hành nối hai ma trận của dữ liệu negative và positive lại thành một ma trận có kích thước 14596 x 3780 chứa dữ liệu huấn luyện
+		\item Tạo một vector có kích thước 14596 phần tử (bằng số mẫu huấn luyện) trong đó 12180 phần tử đầu tiên chứa giá trị 0 (đại diện cho mẫu âm) và 2416 phần tử còn lại trong vector là giá trị 1 (mẫu dương - người)
+		\item Đưa vector đặc trưng và nhãn vào mô hình huấn luyện SVM để học
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Phát hiện người dùng phương pháp HOG}
+	\begin{itemize}
+		\item Đọc ảnh
+		\item Tiền xử lý/chuẩn hóa
+		\item Xây dựng kim tự tháp ảnh multi-scale
+		\item Crop ảnh cửa sổ ra khỏi ảnh gốc
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Phát hiện người dùng phương pháp HOG}
+	\begin{itemize}
+		\item Trích chọn đặc trưng ảnh đã crop
+		\item Phân loại lớp đối tượng theo đặc trưng hình ảnh
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Kết luận}
+	
+\end{frame}
+
+\begin{frame}{Tham khảo}
+\begin{thebibliography}{3}
+	\bibitem{myself}
+	S.~Cheong. \empr{\href{https://github.com/sanhacheong/stanford_beamer_template}{https://github.com/sanhacheong/stanford\_beamer\_presentation}}. {GitHub}, August 2017.
+\end{thebibliography}
+\end{frame}
+
+\end{document}
