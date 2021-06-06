@@ -47,7 +47,7 @@ def hog(img_gray, cell_size=8, block_size=2, bins=9):
             mag = magnitude[cy*cell_size:cy*cell_size+cell_size, cx*cell_size:cx*cell_size+cell_size]
             # https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogram.html
             hist, _ = np.histogram(ori, bins=bins, range=(0, 180), weights=mag) # 1-D vector, 9 elements
-            hist_tensor[cy, cx, :] = hist
+            hist_tensor[cy, cx, :] = hist #create cy matrix with bx row and 9 cloums
         pass
     pass
     
@@ -64,7 +64,7 @@ def hog(img_gray, cell_size=8, block_size=2, bins=9):
             feature_tensor[by, bx, :] = v / LA.norm(v, 2)
             # avoid NaN:
             if np.isnan(feature_tensor[by, bx, :]).any(): # avoid NaN (zero division)
-                feature_tensor[by, bx, :] = v
+                feature_tensor[by, bx, :] = v # create by matrix with bx row and cloums
     
     return feature_tensor.flatten() # 3780 features
 
